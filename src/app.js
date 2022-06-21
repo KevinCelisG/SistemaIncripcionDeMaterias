@@ -11,6 +11,7 @@ app.set("port", 4000);
 
 // Middlewares - Details about request and response
 app.use(morgan("dev"));
+app.use(express.json());
 
 // Routes 
 app.use("/api/users", usersRoutes);
