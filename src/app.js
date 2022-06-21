@@ -3,6 +3,7 @@ import morgan from "morgan";
 // Routes
 import usersRoutes from "./routes/users.routes";
 import subjectsRoutes from "./routes/subjects.routes";
+import inscriptionsRoutes from "./routes/inscriptions.routes";
 
 const app = express();
 
@@ -16,5 +17,6 @@ app.use(express.json());
 // Routes 
 app.use("/api/users", usersRoutes);
 app.use("/api/subjects", subjectsRoutes);
+app.use("/api/inscriptions", inscriptionsRoutes);
 
 export default app;
