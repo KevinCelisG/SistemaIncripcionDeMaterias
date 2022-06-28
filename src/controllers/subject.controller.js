@@ -1,6 +1,6 @@
 import { getConnection } from "../db/db";
 import { PrismaClient } from '@prisma/client'
-import { INTEGER } from "sequelize";
+
 const prisma = new PrismaClient()
 
 const getSubjects = async(req, res) => {
@@ -69,20 +69,20 @@ const updateSubject = async(req, res) => {
         const { nombre_materia, creditos, codigo_materia, estado, es_habilitable } = req.body;
 
         if (nombre_materia == undefined || creditos == undefined || codigo_materia == undefined || estado == undefined || es_habilitable == undefined) {
-            res.status(400).json({ message: "Bad request. Please fill all fields." });
+            res.status(400).json({ error: 400, message: "Bad request. Please fill all fields." });
         }
 
         const subject = { nombre_materia, creditos, codigo_materia, estado, es_habilitable };
         // const connection = await getConnection();
         // const result = await connection.query("UPDATE materia SET ? where id_materia = ?", [subject, id]);
         const allMaterias = await prisma.materia.findMany({
-                where: {
-                    codigo_materia: parseInt(id)
-                },
-                data: subject
+            where: {
+                codigo_materia: parseInt(id)
+            },
+            data: subject
 
-            })
-            // res.json(result);
+        })
+        res.json(allMaterias);
     } catch (error) {
         // res.status(500);
         // console.log(error.message);
