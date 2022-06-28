@@ -5,13 +5,26 @@ import usersRoutes from "./routes/users.routes";
 import subjectsRoutes from "./routes/subjects.routes";
 import inscriptionsRoutes from "./routes/inscriptions.routes";
 
+import { PrismaClient } from '@prisma/client'
 const swaggerUI = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerJSDoc = YAML.load('./api.yaml')
-
-
+const prisma = new PrismaClient()
 const app = express();
 
+
+async function init() {
+    const allUsers = await prisma.curso.findMany()
+    console.log(allUsers)
+}
+
+init()
+    .catch((e) => {
+        throw e
+    })
+    .finally(async() => {
+        await prisma.$disconnect()
+    })
 
 
 
