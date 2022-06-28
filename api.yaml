@@ -1,127 +1,520 @@
 ---
 openapi: 3.0.0
 info:
-  title: Simple Inventory API
-  description: This is a simple API
+  title: Sistema de Inscripciones UPTC V2
+  description: Este es un ejemplo para crear inscripciones creado para la materia de Sistemas Distribuidos 2022 UPTC
   contact:
-    email: you@your-company.com
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    name: Ronald Johan Pineda
+    email: ronald.pineda01@uptc.edu.co
   version: 1.0.0
+externalDocs:
+  description: 'GitHub '
+  url: https://github.com/keos14/SistemaIncripcionDeMaterias
 servers:
-- url: https://virtserver.swaggerhub.com/RonaldJ11/Sistema_Inscripciones/1.0.0
-  description: Api de inscripcion de materias Sistemas Distribuidos
+- url: https://localhost:4000
+  description: |
+    Servidor principal y local de manejo de materias
 tags:
-- name: admins
+- name: Usuarios
   description: Secured Admin-only calls
-- name: developers
+- name: Inscripciones
   description: Operations available to regular developers
+- name: Materias
 paths:
-  /inventory:
+  /api/users/{id}:
     get:
       tags:
-      - developers
-      summary: searches inventory
+      - Usuarios
+      summary: Obtener Usuario.
       description: |
-        By passing in the appropriate options, you can search for
-        available inventory in the system
-      operationId: searchInventory
+        Trae información del usuario registrado con el id.
+      operationId: getUser
       parameters:
-      - name: searchString
-        in: query
-        description: pass an optional search string for looking up inventory
-        required: false
-        style: form
-        explode: true
+      - name: id
+        in: path
+        description: User ID
+        required: true
+        style: simple
+        explode: false
         schema:
-          type: string
-      - name: skip
-        in: query
-        description: number of records to skip for pagination
-        required: false
-        style: form
-        explode: true
-        schema:
-          minimum: 0
           type: integer
-          format: int32
-      - name: limit
-        in: query
-        description: maximum number of records to return
-        required: false
-        style: form
-        explode: true
-        schema:
-          maximum: 50
-          minimum: 0
-          type: integer
-          format: int32
+          format: int64
       responses:
         "200":
-          description: search results matching criteria
+          description: Successful operation
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/InventoryItem'
-        "400":
-          description: bad input parameter
-    post:
+                $ref: '#/components/schemas/Usuarios'
+        "500":
+          description: Error Interno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+    put:
       tags:
-      - admins
-      summary: adds an inventory item
-      description: Adds an item to the system
-      operationId: addInventory
+      - Usuarios
+      summary: Editar Usuario
+      parameters:
+      - name: id
+        in: path
+        description: User ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
       requestBody:
-        description: Inventory item to add
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InventoryItem'
+              $ref: '#/components/schemas/Usuarios'
+            example:
+              id_usuario: 1221-2
+              numero_documento: Jessica Smith
+              nombre_usuario: Pedro andres
+              apellido_usuario: Ariza
+              tipo_documento: CC
+              codigo: 213123123
+              estado: 1
       responses:
-        "201":
-          description: item created
+        "200":
+          description: OK
         "400":
-          description: invalid input, object invalid
-        "409":
-          description: an existing item already exists
+          description: Bad request. Please fill all fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+              example:
+                type: 400
+                message: Bad request. Please fill all fields.
+        "500":
+          description: Error Interno.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+              example:
+                type: 400
+  /api/users/:
+    get:
+      tags:
+      - Usuarios
+      summary: Obtener Usuarios.
+      description: |
+        Trae información del usuario registrado con el id.
+      operationId: getUsers
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuarios'
+        "500":
+          description: Error Interno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+    post:
+      tags:
+      - Usuarios
+      summary: Adds a new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuarios'
+            example:
+              id_usuario: 1221-2
+              numero_documento: Jessica Smith
+              nombre_usuario: Pedro andres
+              apellido_usuario: Ariza
+              tipo_documento: CC
+              codigo: 213123123
+              estado: 1
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad request. Please fill all fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+              example:
+                type: 400
+                message: Bad request. Please fill all fields.
+        "500":
+          description: Error Interno.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+              example:
+                type: 400
+  /api/subjects/:
+    get:
+      tags:
+      - Materias
+      summary: Obtener Materias.
+      description: |
+        Trae información de las materias existentes.
+      operationId: getSubjects
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Materias'
+        "500":
+          description: Error Interno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+    post:
+      tags:
+      - Materias
+      summary: Adds a new Subjects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Materias'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad request. Please fill all fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+              example:
+                type: 400
+                message: Bad request. Please fill all fields.
+        "500":
+          description: Error Interno.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+              example:
+                type: 400
+  /api/subjects/{id}:
+    get:
+      tags:
+      - Materias
+      summary: Obtener Materia.
+      description: |
+        Trae información de la mateira registrado con el id.
+      operationId: getSubject
+      parameters:
+      - name: id
+        in: path
+        description: Subject ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Materias'
+        "500":
+          description: Error Interno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+    put:
+      tags:
+      - Materias
+      summary: Editar Materia
+      parameters:
+      - name: id
+        in: path
+        description: User ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Materias'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad request. Please fill all fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+              example:
+                type: 400
+                message: Bad request. Please fill all fields.
+        "500":
+          description: Error Interno.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+              example:
+                type: 400
+  /api/inscriptions/:
+    get:
+      tags:
+      - Inscripciones
+      summary: Obtener Materias.
+      description: |
+        Trae información de las materias existentes.
+      operationId: getInscriptions
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inscripciones'
+        "500":
+          description: Error Interno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+    post:
+      tags:
+      - Inscripciones
+      summary: Adds a new Inscription
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Inscripciones'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad request. Please fill all fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+              example:
+                type: 400
+                message: Bad request. Please fill all fields.
+        "500":
+          description: Error Interno.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+              example:
+                type: 400
+  /api/inscriptions/{id}:
+    get:
+      tags:
+      - Inscripciones
+      summary: Obtener Materia.
+      description: |
+        Trae información de la inscripcion registrado con el id.
+      operationId: getInscription
+      parameters:
+      - name: id
+        in: path
+        description: Inscripciones ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inscripciones'
+        "500":
+          description: Error Interno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+    put:
+      tags:
+      - Inscripciones
+      summary: Editar Materia
+      parameters:
+      - name: id
+        in: path
+        description: User ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Materias'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad request. Please fill all fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+              example:
+                type: 400
+                message: Bad request. Please fill all fields.
+        "500":
+          description: Error Interno.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/msg_error'
+              example:
+                type: 400
 components:
   schemas:
-    InventoryItem:
+    Usuarios:
       required:
-      - id
-      - manufacturer
-      - name
-      - releaseDate
+      - apellido_usuario
+      - codigo
+      - estado
+      - id_usuario
+      - nombre_usuario
+      - numero_documento
+      - tipo_documento
       type: object
       properties:
-        id:
+        id_usuario:
           type: string
-          format: uuid
-          example: d290f1ee-6c54-4b01-90e6-d701748f0851
-        name:
+          example: Pedro Andres
+        numero_documento:
           type: string
-          example: Widget Adapter
-        releaseDate:
+          example: "15151565165"
+        nombre_usuario:
           type: string
-          format: date-time
-          example: 2016-08-29T09:12:33.001Z
-        manufacturer:
-          $ref: '#/components/schemas/Manufacturer'
-    Manufacturer:
+          example: Pepe T1
+        apellido_usuario:
+          type: string
+          example: Perez T2
+        tipo_documento:
+          type: string
+          example: CC
+        codigo:
+          type: string
+          example: "123123123"
+        estado:
+          type: string
+          example: A
+    Materias:
       required:
-      - name
+      - codigo_materia
+      - creditos
+      - es_habilitable
+      - estado VARCHAR
+      - id_materia
+      - nombre_materia
       type: object
       properties:
-        name:
+        id_materia:
           type: string
-          example: ACME Corporation
-        homePage:
+          example: Sistemas Distribuidos
+        creditos:
+          type: integer
+          example: 4
+        codigo_materia:
+          type: integer
+          example: 10000075
+        estado:
           type: string
-          format: url
-          example: https://www.acme-corp.com
-        phone:
+          example: A
+        es_habilitable:
           type: string
-          example: 408-867-5309
+          example: SI
+    Cursos:
+      required:
+      - Materia_id_materia
+      - cupos
+      - estado
+      - fecha_fin
+      - fecha_inicio
+      - id_curso
+      type: object
+      properties:
+        id_curso:
+          type: integer
+          example: 123467972
+        cupos:
+          type: integer
+          example: 1
+        fecha_inicio:
+          type: string
+          example: 10/08/2020
+        fecha_fin:
+          type: string
+          example: 10/08/2020
+        estado:
+          type: string
+          example: A
+        Materia_id_materia:
+          type: integer
+          example: 10000075
+    Inscripciones:
+      required:
+      - Curso_id_curso
+      - Usuario_id_usuario
+      - id_inscripcion
+      - nota_habilitacion
+      - nota_primer_corte
+      - nota_segundo_corte
+      type: object
+      properties:
+        id_inscripcion:
+          type: integer
+          example: 2020215156
+        nota_primer_corte:
+          type: integer
+        nota_segundo_corte:
+          type: integer
+        nota_habilitacion:
+          type: integer
+        Usuario_id_usuario:
+          type: integer
+          example: 201910075
+        Curso_id_curso:
+          type: integer
+          example: 123456789
+    msg_error:
+      type: object
+      properties:
+        type:
+          type: integer
+          example: 500
+        message:
+          type: string
+          example: Error interno de la DB
