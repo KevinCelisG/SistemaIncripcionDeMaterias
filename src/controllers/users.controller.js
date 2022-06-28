@@ -1,10 +1,11 @@
 import {getConnection} from "../db/db";
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 
 const getUsers = async (req, res) => {
   try {
-    const connection = await getConnection();
-    const result = await connection.query("Select * from usuario");
-    res.json(result); 
+    const allUsers = await prisma.usuario.findMany();
+    res.json(allUsers); 
   } catch (error) {
     res.status(500);
     res.send(error.message);
@@ -20,9 +21,12 @@ const addUsers = async (req, res) => {
     }
 
     const user = {numero_documento, nombre_usuario, apellido_usuario, tipo_documento, codigo, estado};
-    const connection = await getConnection();
-    const result = await connection.query("Insert into usuario set ?", user);
-    res.json({message: "User added."}); 
+    
+    const result = await prisma.usuario.create({
+            data: user
+        })
+
+    res.json({ status: 200, message: result });
   } catch (error) {
     res.status(500);
     console.log(error.message);
@@ -32,9 +36,14 @@ const addUsers = async (req, res) => {
 const getUser = async (req, res) => {
   try {
     const {id} = req.params;
-    const connection = await getConnection();
-    const result = await connection.query("Select * from usuario where id_usuario = ?", id);
-    res.json(result); 
+    
+    const user = await prisma.usuario.findMany({
+            include: {
+                id_usuario: id
+           },   
+    })
+        
+    res.json(user); 
   } catch (error) {
     res.status(500);
     console.log(error.message);
