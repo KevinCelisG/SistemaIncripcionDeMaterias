@@ -60,9 +60,16 @@ const updateUser = async (req, res) => {
     }
 
     const user = {numero_documento, nombre_usuario, apellido_usuario, tipo_documento, codigo, estado};
-    const connection = await getConnection();
-    const result = await connection.query("UPDATE usuario SET ? where id_usuario = ?", [user, id]);
-    res.json(result); 
+    
+      const userUpdated = await prisma.usuario.findMany({
+                where: {
+                    id_usuario: parseInt(id)
+                },
+                data: user
+
+            })
+    
+    res.json(userUpdated); 
   } catch (error) {
     res.status(500);
     console.log(error.message);
