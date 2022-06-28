@@ -1,5 +1,6 @@
 import { getConnection } from "../db/db";
 import { PrismaClient } from '@prisma/client'
+import { INTEGER } from "sequelize";
 const prisma = new PrismaClient()
 
 const getSubjects = async(req, res) => {
@@ -45,19 +46,19 @@ const getSubject = async(req, res) => {
         // res.json(result);
 
         const allMaterias = await prisma.materia.findMany({
-            include: {
-                codigo_materia: 1000005
+            where: {
+                codigo_materia: parseInt(id)
             },
         })
-        if (allMaterias) {
+        if (allMaterias != []) {
             res.status(200);
-            res.json({ status: 200, message: result });
+            res.json({ status: 200, message: allMaterias });
         } else {
             res.status(404).json({ error: 404, message: "Bad request. Not Found." });
         }
 
     } catch (error) {
-        res.status(500);
+        res.status(500).json({ error: 404, message: error.message });
         console.log(error.message);
     }
 };
@@ -72,12 +73,19 @@ const updateSubject = async(req, res) => {
         }
 
         const subject = { nombre_materia, creditos, codigo_materia, estado, es_habilitable };
-        const connection = await getConnection();
-        const result = await connection.query("UPDATE materia SET ? where id_materia = ?", [subject, id]);
-        res.json(result);
+        // const connection = await getConnection();
+        // const result = await connection.query("UPDATE materia SET ? where id_materia = ?", [subject, id]);
+        const allMaterias = await prisma.materia.findMany({
+                where: {
+                    codigo_materia: parseInt(id)
+                },
+                data: subject
+
+            })
+            // res.json(result);
     } catch (error) {
-        res.status(500);
-        console.log(error.message);
+        // res.status(500);
+        // console.log(error.message);
     }
 };
 
