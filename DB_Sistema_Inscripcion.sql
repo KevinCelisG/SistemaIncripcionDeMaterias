@@ -31,6 +31,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Usuario` (
   PRIMARY KEY (`id_usuario`))
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `mydb`.`LogTransaccional`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`LogTransaccional` (
+  `id_log` INT NOT NULL AUTO_INCREMENT,
+  `fecha` DATETIME NOT NULL,
+  `descripcion` VARCHAR(255) NOT NULL,
+  `estado` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id_log`))
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `mydb`.`Materia`
