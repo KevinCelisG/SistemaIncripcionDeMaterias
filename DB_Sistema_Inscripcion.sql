@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Inscripcion` (
   `nota_primer_corte` DECIMAL(3) NULL,
   `nota_segundo_corte` DECIMAL(3) NULL,
   `nota_habilitacion` DECIMAL(3) NULL,
-  `Usuario_id_usuario` INT NULL,
+  `Usuario_id_usuario` INT NOT NULL,
   `Curso_id_curso` INT NOT NULL,
   PRIMARY KEY (`id_inscripcion`, `Usuario_id_usuario`, `Curso_id_curso`));
 

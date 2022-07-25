@@ -1,12 +1,12 @@
 import { getConnection } from "../db/db";
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient()
 
 const getCourses = async(req, res) => {
     try {
-        // const connection = await getConnection();
-        // const result = await connection.query("Select * from Curso");
-        // res.json(result);
+        //const connection = await getConnection();
+        //const result = await connection.query("Select * from Curso");
+        //console.log(result);
         const allUsers = await prisma.curso.findMany()
         console.log(allUsers)
     } catch (error) {
