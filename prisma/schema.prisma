@@ -38,11 +38,9 @@ model inscripcion {
 
 model log {
   id_log         Int         @id @default(autoincrement())
-  id_inscripcion Int
-  fecha_creacion DateTime?   @db.Date
-  inscripcion    inscripcion @relation(fields: [id_inscripcion], references: [id_inscripcion], onUpdate: Restrict, map: "log_ibfk_1")
-
-  @@index([id_inscripcion], map: "id_inscripcion")
+  fecha DateTime?   @db.Date
+  descripcion           String        @db.VarChar(255)
+  estado           String        @db.VarChar(20)
 }
 
 model materia {
