@@ -51,6 +51,6 @@ const getLog = async (req, res) => {
 
 export const methods = {
   getLogs,  
-  getLog,  
-  getLog
+  getLog,
+  addLog
 };
