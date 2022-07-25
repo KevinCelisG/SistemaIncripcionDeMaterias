@@ -59,48 +59,32 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`Curso`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Curso` (
+CREATE TABLE IF NOT EXISTS Curso (
   `id_curso` INT NOT NULL AUTO_INCREMENT,
   `cupos` INT NOT NULL,
   `fecha_inicio` DATE NOT NULL,
   `fecha_fin` DATE NOT NULL,
   `estado` VARCHAR(1) NOT NULL,
   `Materia_id_materia` INT NULL,
-  PRIMARY KEY (`id_curso`),
-  INDEX `fk_Curso_Materia_idx` (`Materia_id_materia` ASC) VISIBLE,
-  CONSTRAINT `fk_Curso_Materia`
-    FOREIGN KEY (`Materia_id_materia`)
-    REFERENCES `mydb`.`Materia` (`id_materia`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  PRIMARY KEY (`id_curso`));
 
+ALTER TABLE Curso ADD FOREIGN KEY(Materia_id_materia) REFERENCES Materia(id_materia);
 
 -- -----------------------------------------------------
 -- Table `mydb`.`Inscripcion`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Inscripcion` (
+CREATE TABLE IF NOT EXISTS Inscripcion (
   `id_inscripcion` INT NOT NULL AUTO_INCREMENT,
-  `nota_primer_corte` DECIMAL(3) NOT NULL,
-  `nota_segundo_corte` DECIMAL(3) NOT NULL,
+  `nota_primer_corte` DECIMAL(3) NULL,
+  `nota_segundo_corte` DECIMAL(3) NULL,
   `nota_habilitacion` DECIMAL(3) NULL,
   `Usuario_id_usuario` INT NULL,
   `Curso_id_curso` INT NOT NULL,
-  PRIMARY KEY (`id_inscripcion`, `Usuario_id_usuario`, `Curso_id_curso`),
-  INDEX `fk_Inscripcion_Usuario1_idx` (`Usuario_id_usuario` ASC) VISIBLE,
-  INDEX `fk_Inscripcion_Curso1_idx` (`Curso_id_curso` ASC) VISIBLE,
-  CONSTRAINT `fk_Inscripcion_Usuario1`
-    FOREIGN KEY (`Usuario_id_usuario`)
-    REFERENCES `mydb`.`Usuario` (`id_usuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Inscripcion_Curso1`
-    FOREIGN KEY (`Curso_id_curso`)
-    REFERENCES `mydb`.`Curso` (`id_curso`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  PRIMARY KEY (`id_inscripcion`, `Usuario_id_usuario`, `Curso_id_curso`));
 
+ALTER TABLE Inscripcion ADD FOREIGN KEY(Usuario_id_usuario) REFERENCES Usuario(id_usuario);
+
+ALTER TABLE Inscripcion ADD FOREIGN KEY(Curso_id_curso) REFERENCES Curso(id_curso);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
@@ -144,5 +128,3 @@ USE `mydb`;
 INSERT INTO `mydb`.`Inscripcion` (`id_inscripcion`, `nota_primer_corte`, `nota_segundo_corte`, `nota_habilitacion`, `Usuario_id_usuario`, `Curso_id_curso`) VALUES (1, 3.2, 3.5, NULL, 1, 1);
 
 COMMIT;
-
-select i.id_inscripcion, e,nombre, e.apellido from Inscripcion i, usuario e where (i.id_usuario = e.id_usuario) AND (e.estado = "E")
