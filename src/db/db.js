@@ -1,5 +1,4 @@
 import mysql from "mysql";
-import config from "../config";
 
 const connection = mysql.createConnection({
     host: "mydb.clcxgllpmzvk.us-east-1.rds.amazonaws.com",
