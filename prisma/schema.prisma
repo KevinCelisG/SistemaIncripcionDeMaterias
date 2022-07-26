@@ -36,7 +36,7 @@ model inscripcion {
   @@index([Curso_id_curso], map: "fk_Inscripcion_Curso1")
 }
 
-model log {
+model LogTransaccional {
   id_log         Int         @id @default(autoincrement())
   fecha DateTime?   @db.Date
   descripcion           String        @db.VarChar(255)
