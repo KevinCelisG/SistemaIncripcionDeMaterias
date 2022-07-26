@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 const getLogs = async (req, res) => {
   try {
-    const allLogs = await prisma.log.findMany();
+    const allLogs = await prisma.logTransaccional.findMany();
     res.json(allLogs); 
   } catch (error) {
     res.status(500);
@@ -22,7 +22,7 @@ const addLog = async (req, res) => {
 
     const log = {fecha, descripcion, estado};
     
-    const result = await prisma.log.create({
+    const result = await prisma.logTransaccional.create({
             data: log
         })
     res.json({ status: 200, message: result });
@@ -36,7 +36,7 @@ const getLog = async (req, res) => {
   try {
     const {id} = req.params;
     
-    const log = await prisma.log.findMany({
+    const log = await prisma.logTransaccional.findMany({
             include: {
                 id_log: id
            },   
