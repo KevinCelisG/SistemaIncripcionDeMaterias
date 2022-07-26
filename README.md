@@ -1,9 +1,9 @@
 # SistemaInscripcionDeMaterias
 Un sistema de inscripción de materias creado a partir de MySQL, Node JS
 
-Pasos de Instalación
+## Pasos de Instalación
 
-1) Descarga el Repositorio
+1) Descarga el Repositorio\n
 2) Elimina la carpeta node modules 
 3) Ejecuta el comando npm Install
 4) Si no desea eliminar la carpeta ejecuta npm update
