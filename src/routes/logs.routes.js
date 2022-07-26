@@ -3,8 +3,8 @@ import { methods as logController } from "../controllers/log.controller";
 
 const router = Router();
 
-router.get("/", userController.getLogs);
-router.post("/", userController.addLog);
-router.get("/:id", userController.getLog);
+router.get("/", logController.getLogs);
+router.post("/", logController.addLog);
+router.get("/:id", logController.getLog);
 
 export default router;
