@@ -4,6 +4,7 @@ import morgan from "morgan";
 import usersRoutes from "./routes/users.routes";
 import subjectsRoutes from "./routes/subjects.routes";
 import inscriptionsRoutes from "./routes/inscriptions.routes";
+import logsRoutes from "./routes/logs.routes";
 
 import { PrismaClient } from '@prisma/client'
 const swaggerUI = require('swagger-ui-express');
@@ -40,6 +41,7 @@ app.use(express.json());
 app.use("/api/users", usersRoutes);
 app.use("/api/subjects", subjectsRoutes);
 app.use("/api/inscriptions", inscriptionsRoutes);
+app.use("/api/logs", logsRoutes);
 
 // swagger
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerJSDoc));
