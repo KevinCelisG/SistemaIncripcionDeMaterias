@@ -9,7 +9,7 @@ Pasos de Instalación
 4) Si no desea eliminar la carpeta ejecuta npm update
 5) En el archivo .env modifica la coneccion para tu base de datos 
 DATABASE_URL="$TIPO://root:@{{URL}}:{{PORT}}/mydb?schema=public"
-6)Ejecuta npx prisma migrate dev --name init
+6)Ejecuta `npx prisma migrate dev --name init`
 7) Validar si se creo el archivo de migracion(y se ejecuto en la DB) de lo contrario ejecute el sql almacenado en el repositorio
 
 Puerto Default: 4000
