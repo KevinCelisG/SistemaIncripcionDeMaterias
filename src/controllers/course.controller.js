@@ -28,7 +28,7 @@ const addCourse = async(req, res) => {
 
         const course = { cupos, fecha_inicio, fecha_fin, estado, Materia_id_materia };
         const connection = await getConnection();
-        const result = await connection.query("Insert into Materia set ?", course);
+        const result = await connection.query("Insert into materia set ?", course);
         res.json({ message: "Course added." });
     } catch (error) {
         res.status(500);

@@ -7,11 +7,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model LogTransaccional {
+  id_log      Int      @id @default(autoincrement())
+  fecha       DateTime @db.Date
+  descripcion String   @db.VarChar(255)
+  estado      String   @db.VarChar(20)
+}
+
 model curso {
   id_curso           Int           @id @default(autoincrement())
   cupos              Int
-  fecha_inicio       DateTime     @db.Date
-  fecha_fin          DateTime?      @db.Date
+  fecha_inicio       DateTime      @db.Date
+  fecha_fin          DateTime?     @db.Date
   estado             String        @db.VarChar(1)
   Materia_id_materia Int?
   materia            materia?      @relation(fields: [Materia_id_materia], references: [id_materia], onDelete: NoAction, onUpdate: NoAction, map: "curso_ibfk_1")
@@ -29,18 +36,10 @@ model inscripcion {
   Curso_id_curso     Int
   curso              curso    @relation(fields: [Curso_id_curso], references: [id_curso], onDelete: NoAction, onUpdate: NoAction, map: "fk_Inscripcion_Curso1")
   usuario            usuario  @relation(fields: [Usuario_id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "inscripcion_ibfk_1")
-  log                log[]
 
   @@id([id_inscripcion, Usuario_id_usuario, Curso_id_curso])
   @@index([Usuario_id_usuario], map: "Usuario_id_usuario")
   @@index([Curso_id_curso], map: "fk_Inscripcion_Curso1")
-}
-
-model logTransaccional {
-  id_log         Int         @id @default(autoincrement())
-  fecha DateTime?   @db.Date
-  descripcion           String        @db.VarChar(255)
-  estado           String        @db.VarChar(20)
 }
 
 model materia {
