@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 const getLogs = async (req, res) => {
   try {
     const allLogs = await prisma.logTransaccional.findMany();
-    res.json(allLogs); 
+    res.json(allLogs);
   } catch (error) {
     res.status(500);
     res.send(error.message);
@@ -14,14 +14,14 @@ const getLogs = async (req, res) => {
 
 const addLog = async (req, res) => {
   try {
-    const {fecha, descripcion, estado} = req.body;
+    let {fecha, descripcion, estado} = req.body;
 
     if(fecha == undefined || descripcion == undefined || estado == undefined){
       res.status(400).json({message: "Bad request."});
     }
-
+    fecha = new Date(fecha)
     const log = {fecha, descripcion, estado};
-    
+
     const result = await prisma.logTransaccional.create({
             data: log
         })
@@ -35,14 +35,14 @@ const addLog = async (req, res) => {
 const getLog = async (req, res) => {
   try {
     const {id} = req.params;
-    
+
     const log = await prisma.logTransaccional.findMany({
             include: {
                 id_log: id
-           },   
+           },
     })
-        
-    res.json(log); 
+
+    res.json(log);
   } catch (error) {
     res.status(500);
     console.log(error.message);
@@ -50,7 +50,7 @@ const getLog = async (req, res) => {
 };
 
 export const methods = {
-  getLogs,  
+  getLogs,
   getLog,
   addLog
 };
