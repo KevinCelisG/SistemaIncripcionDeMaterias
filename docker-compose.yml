@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  server1:
+    container_name: server1
+    restart: on-failure
+    build: .
+    ports:
+      - "3000:4000"
+  server2:
+    container_name: server2
+    restart: on-failure
+    build: .
+    ports:
+      - "3001:4000"
+  server3:
+    container_name: server3
+    restart: on-failure
+    build: .
+    ports:
+      - "3002:4000"
+  nginx:
+    container_name: nginxBalancer
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - server1
+      - server2
+      - server3
