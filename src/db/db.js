@@ -1,10 +1,10 @@
 import mysql from "mysql";
 
 const connection = mysql.createConnection({
-    host: "mydb.clcxgllpmzvk.us-east-1.rds.amazonaws.com",
+    host: "database-1.clcxgllpmzvk.us-east-1.rds.amazonaws.com",
     database: "mydb",
-    user: "root",
-    password: "12345678",
+    user: "admin",
+    password: "Fjg3rHwUEfDc2vn",
     port: 3306
 });
 

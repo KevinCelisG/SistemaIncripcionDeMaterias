@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Usuario` (
   `tipo_documento` VARCHAR(2) NOT NULL,
   `codigo` VARCHAR(10) NOT NULL,
   `estado` VARCHAR(1) NOT NULL,
-  `image` VARCHAR(10) NOT NULL,
+  `imagen` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`id_usuario`))
 ENGINE = InnoDB;
 
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS Inscripcion (
   `nota_primer_corte` DECIMAL(3) NULL,
   `nota_segundo_corte` DECIMAL(3) NULL,
   `nota_habilitacion` DECIMAL(3) NULL,
-  `Usuario_id_usuario` INT NOT NULL,
+  `Usuario_id_usuario` INT NULL,
   `Curso_id_curso` INT NOT NULL,
   PRIMARY KEY (`id_inscripcion`, `Usuario_id_usuario`, `Curso_id_curso`));
 
