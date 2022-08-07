@@ -28,9 +28,20 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Usuario` (
   `tipo_documento` VARCHAR(2) NOT NULL,
   `codigo` VARCHAR(10) NOT NULL,
   `estado` VARCHAR(1) NOT NULL,
+  `image` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`id_usuario`))
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `mydb`.`LogTransaccional`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`LogTransaccional` (
+  `id_log` INT NOT NULL AUTO_INCREMENT,
+  `fecha` DATETIME NOT NULL,
+  `descripcion` VARCHAR(255) NOT NULL,
+  `estado` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id_log`))
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `mydb`.`Materia`
@@ -49,7 +60,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`Curso`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Curso` (
+CREATE TABLE IF NOT EXISTS Curso (
   `id_curso` INT NOT NULL AUTO_INCREMENT,
   `cupos` INT NOT NULL,
   `fecha_inicio` DATE NOT NULL,
@@ -63,16 +74,17 @@ ALTER TABLE Curso ADD FOREIGN KEY(Materia_id_materia) REFERENCES Materia(id_mate
 -- -----------------------------------------------------
 -- Table `mydb`.`Inscripcion`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Inscripcion` (
+CREATE TABLE IF NOT EXISTS Inscripcion (
   `id_inscripcion` INT NOT NULL AUTO_INCREMENT,
   `nota_primer_corte` DECIMAL(3) NULL,
   `nota_segundo_corte` DECIMAL(3) NULL,
   `nota_habilitacion` DECIMAL(3) NULL,
-  `Usuario_id_usuario` INT NOT NULL,
+  `Usuario_id_usuario` INT NULL,
   `Curso_id_curso` INT NOT NULL,
   PRIMARY KEY (`id_inscripcion`, `Usuario_id_usuario`, `Curso_id_curso`));
 
 ALTER TABLE Inscripcion ADD FOREIGN KEY(Usuario_id_usuario) REFERENCES Usuario(id_usuario);
+
 ALTER TABLE Inscripcion ADD FOREIGN KEY(Curso_id_curso) REFERENCES Curso(id_curso);
 
 SET SQL_MODE=@OLD_SQL_MODE;
