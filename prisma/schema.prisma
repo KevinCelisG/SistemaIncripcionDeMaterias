@@ -33,16 +33,17 @@ model Materia {
   codigo_materia Int
   estado         String  @db.VarChar(1)
   es_habilitable String  @db.VarChar(2)
+  cupos          Int
   Curso          Curso[]
 }
 
 model Usuario {
-  id_usuario       Int    @id @default(autoincrement())
-  numero_documento String @db.VarChar(30)
-  nombre_usuario   String @db.VarChar(45)
-  apellido_usuario String @db.VarChar(45)
-  tipo_documento   String @db.VarChar(2)
-  codigo           String @db.VarChar(10)
-  estado           String @db.VarChar(1)
-  imagen           String @db.VarChar(200)
+  id_usuario       Int     @id @default(autoincrement())
+  numero_documento String  @db.VarChar(30)
+  nombre_usuario   String  @db.VarChar(45)
+  apellido_usuario String? @db.VarChar(45)
+  tipo_documento   String? @db.VarChar(2)
+  codigo           String  @db.VarChar(10)
+  estado           String? @db.VarChar(2)
+  imagen           String? @db.VarChar(255)
 }

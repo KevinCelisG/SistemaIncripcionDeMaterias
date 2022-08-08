@@ -24,11 +24,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Usuario` (
   `id_usuario` INT NOT NULL AUTO_INCREMENT,
   `numero_documento` VARCHAR(30) NOT NULL,
   `nombre_usuario` VARCHAR(45) NOT NULL,
-  `apellido_usuario` VARCHAR(45) NOT NULL,
-  `tipo_documento` VARCHAR(2) NOT NULL,
+  `apellido_usuario` VARCHAR(45),
+  `tipo_documento` VARCHAR(2),
   `codigo` VARCHAR(10) NOT NULL,
-  `estado` VARCHAR(1) NOT NULL,
-  `imagen` VARCHAR(200) NOT NULL,
+  `estado` VARCHAR(1) ,
+  `imagen` VARCHAR(200),
   PRIMARY KEY (`id_usuario`))
 ENGINE = InnoDB;
 
