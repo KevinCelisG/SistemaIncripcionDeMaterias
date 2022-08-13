@@ -27,23 +27,39 @@ model Curso {
 }
 
 model Materia {
-  id_materia     Int     @id @default(autoincrement())
-  nombre_materia String  @db.VarChar(45)
+  id_materia     Int           @id @default(autoincrement())
+  nombre_materia String        @db.VarChar(45)
   creditos       Int
   codigo_materia Int
-  estado         String  @db.VarChar(1)
-  es_habilitable String  @db.VarChar(2)
+  estado         String        @db.VarChar(1)
+  es_habilitable String        @db.VarChar(2)
   cupos          Int
   Curso          Curso[]
+  Inscripcion    Inscripcion[]
 }
 
 model Usuario {
-  id_usuario       Int     @id @default(autoincrement())
-  numero_documento String  @db.VarChar(30)
-  nombre_usuario   String  @db.VarChar(45)
-  apellido_usuario String? @db.VarChar(45)
-  tipo_documento   String? @db.VarChar(2)
-  codigo           String  @db.VarChar(10)
-  estado           String? @db.VarChar(2)
-  imagen           String? @db.VarChar(255)
+  id_usuario       Int           @id @default(autoincrement())
+  numero_documento String        @db.VarChar(30)
+  nombre_usuario   String        @db.VarChar(45)
+  apellido_usuario String?       @db.VarChar(45)
+  tipo_documento   String?       @db.VarChar(2)
+  codigo           String        @db.VarChar(10)
+  estado           String?       @db.VarChar(2)
+  imagen           String?       @db.VarChar(255)
+  Inscripcion      Inscripcion[]
+}
+
+model Inscripcion {
+  id_inscripcion     Int      @id @default(autoincrement())
+  nota_primer_corte  Decimal? @db.Decimal(3, 0)
+  nota_segundo_corte Decimal? @db.Decimal(3, 0)
+  nota_habilitacion  Decimal? @db.Decimal(3, 0)
+  Usuario_id_usuario Int?
+  Materia_id_materia Int
+  Materia            Materia  @relation(fields: [Materia_id_materia], references: [id_materia], onDelete: NoAction, onUpdate: NoAction, map: "Inscripcion_ibfk_2")
+  Usuario            Usuario? @relation(fields: [Usuario_id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "Inscripcion_ibfk_1")
+
+  @@index([Materia_id_materia], map: "Materia_id_materia")
+  @@index([Usuario_id_usuario], map: "Usuario_id_usuario")
 }
