@@ -1,5 +1,5 @@
 # SistemaInscripcionDeMaterias
-Un sistema de inscripción de materias creado a partir de MySQL, Node.JS, React, Angular, y Prisma.
+Un sistema de inscripción de materias creado a partir de MySQL, Node.JS, React, y Prisma.
 
 ## Pasos de Instalación
 
