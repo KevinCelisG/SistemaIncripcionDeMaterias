@@ -1,0 +1,58 @@
+GET http://localhost:4000/api/users/ HTTP/1.1
+
+###
+POST http://localhost:4000/api/users/ HTTP/1.1
+content-type: application/json
+
+{
+    "numero_documento":"1234", 
+    "nombre_usuario":"Jorge", 
+    "apellido_usuario":"Nitales", 
+    "tipo_documento":"cc", 
+    "codigo":"1234", 
+    "estado":"a"
+}
+
+###
+GET http://localhost:4000/api/subjects/ HTTP/1.1
+
+###
+POST http://localhost:4000/api/subjects/ HTTP/1.1
+content-type: application/json
+
+{
+    "nombre_materia":"Ingles", 
+    "creditos":0, 
+    "codigo_materia":9119920, 
+    "estado":"1", 
+    "es_habilitable":"0",
+    "cupos": 30 
+}
+
+###
+GET http://localhost:4000/api/logs/ HTTP/1.1
+
+###
+POST http://localhost:4000/api/logs/ HTTP/1.1
+content-type: application/json
+
+{
+    "fecha":"2022/08/12", 
+    "descripcion":"Se envio una petición de prueba", 
+    "estado":"Exitosa"
+}
+
+###
+GET http://localhost:4000/api/inscriptions/ HTTP/1.1
+
+###
+POST http://localhost:4000/api/inscriptions/ HTTP/1.1
+content-type: application/json
+
+{
+    "nota_primer_corte":2.1,
+    "nota_segundo_corte":2.6,
+    "nota_habilitacion":2.1,
+    "Usuario_id_usuario":1, 
+    "Materia_id_materia":101
+}
