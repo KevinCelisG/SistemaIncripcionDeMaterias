@@ -19,13 +19,15 @@ const getInscriptions = async(req, res) => {
 
 const addInscription = async(req, res) => {
     try {
-        const { nota_primer_corte, nota_segundo_corte, nota_habilitacion, Usuario_id_usuario, Curso_id_curso } = req.body;
+    const {id_inscripcion, nota_primer_corte, nota_segundo_corte, nota_habilitacion, Usuario_id_usuario, Materia_id_materia} = req.body;
 
-        if (nota_primer_corte == undefined || nota_segundo_corte == undefined || nota_habilitacion == undefined || Usuario_id_usuario == undefined || Curso_id_curso == undefined) {
+        console.log(req.body)
+
+        if (id_inscripcion == undefined, nota_primer_corte == undefined || nota_segundo_corte == undefined || nota_habilitacion == undefined || Usuario_id_usuario == undefined || Materia_id_materia == undefined) {
             res.status(400).json({ message: "Bad request. Please fill all fields." });
         }
 
-        const inscripcion = { nota_primer_corte, nota_segundo_corte, nota_habilitacion, Usuario_id_usuario, Curso_id_curso };
+        const inscripcion = {id_inscripcion, nota_primer_corte, nota_segundo_corte, nota_habilitacion, Usuario_id_usuario, Materia_id_materia};
         const allMaterias = await prisma.inscripcion.create({
             data: inscripcion
         })
@@ -36,6 +38,7 @@ const addInscription = async(req, res) => {
             error: 500,
             message: error.message
         });
+        console.log(error)
     }
 };
 
